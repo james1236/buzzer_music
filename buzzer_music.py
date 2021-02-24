@@ -137,7 +137,7 @@ tones = {
 #0 D4 8 0;0 D5 8 0;0 G4 8 0;8 C5 2 0;10 B4 2 0;12 G4 2 0;14 F4 1 0;15 G4 17 0;16 D4 8 0;24 C4 8 0
 
 class music:
-    def __init__(self, songString, looping=True, tempo=3, duty=2512):
+    def __init__(self, songString='0 D4 8 0', looping=True, tempo=3, duty=2512):
         self.tempo = tempo
         self.song = songString
         self.looping = looping
@@ -168,14 +168,14 @@ class music:
                 
         #Create empty song structure
         while (self.end > len(self.notes)):
-            self.notes.append(0)
+            self.notes.append(None)
 
         #Populate song structure with the notes
         for note in splitSong:
             snote = note.split(" ")
             beat = round(float(snote[0]));
             
-            if (self.notes[beat] == 0):
+            if (self.notes[beat] == None):
                 self.notes[beat] = []
             self.notes[beat].append([snote[1],ceil(float(snote[2]))]) #Note, Duration
 
@@ -226,7 +226,7 @@ class music:
                 """
                 
                 if (self.beat < len(self.notes)):
-                    if (self.notes[self.beat] != 0):
+                    if (self.notes[self.beat] != None):
                         for note in self.notes[self.beat]:
                             self.playingNotes.append(note[0])
                             self.playingDurations.append(note[1])
