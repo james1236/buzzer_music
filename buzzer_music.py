@@ -137,7 +137,7 @@ tones = {
 #0 D4 8 0;0 D5 8 0;0 G4 8 0;8 C5 2 0;10 B4 2 0;12 G4 2 0;14 F4 1 0;15 G4 17 0;16 D4 8 0;24 C4 8 0
 
 class music:
-    def __init__(self, songString='0 D4 8 0', looping=True, tempo=3, duty=2512):
+    def __init__(self, songString='0 D4 8 0', looping=True, tempo=3, duty=2512, pin=Pin(0)):
         self.tempo = tempo
         self.song = songString
         self.looping = looping
@@ -149,7 +149,7 @@ class music:
         self.beat = -1
         self.arpnote = 0
         
-        self.pwm = PWM(Pin(0))
+        self.pwm = PWM(pin)
         
         self.notes = []
 
