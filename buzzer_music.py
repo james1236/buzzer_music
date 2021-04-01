@@ -1,9 +1,8 @@
 """
 Micropython (Raspberry Pi Pico)
-
-Plays music written on onlinesequencer.net through a monophonic passive piezo buzzer.
-Uses fast arpeggios to simulate polyphony
-
+Plays music written on onlinesequencer.net through a passive piezo buzzer.
+Uses fast arpeggios with a single buzzer to simulate polyphony
+Also supports multiple buzzers at once for real polyphony
 https://github.com/james1236/buzzer_music
 """
 
@@ -137,7 +136,7 @@ tones = {
 #0 D4 8 0;0 D5 8 0;0 G4 8 0;8 C5 2 0;10 B4 2 0;12 G4 2 0;14 F4 1 0;15 G4 17 0;16 D4 8 0;24 C4 8 0
 
 class music:
-    def __init__(self, songString='0 D4 8 0', looping=True, tempo=3, duty=2512, pin=Pin(0)):
+    def __init__(self, songString='0 D4 8 0', looping=True, tempo=3, duty=2512, pin=None, pins=[Pin(0)]):
         self.tempo = tempo
         self.song = songString
         self.looping = looping
@@ -149,7 +148,15 @@ class music:
         self.beat = -1
         self.arpnote = 0
         
-        self.pwm = PWM(pin)
+        self.pwms = []
+        
+        if (not (pin is None)):
+            pins = [pin]
+            
+        i = 0
+        for pin in pins:
+            self.pwms.append(PWM(pins[i]))
+            i = i + 1
         
         self.notes = []
 
@@ -184,7 +191,8 @@ class music:
         self.end = ceil(self.end / 8) * 8
     
     def stop(self):
-        self.pwm.deinit()
+        for pwm in self.pwms:
+            pwm.deinit()
         self.stopped = True
         
     def tick(self):
@@ -232,20 +240,23 @@ class music:
                             self.playingDurations.append(note[1])
                 
                 #Only need to run these checks on beats
-                if ((len(self.playingNotes) == 0)):
-                    self.pwm.duty_u16(0)
-                elif (len(self.playingNotes) == 1):
-                    #Play note
-                    self.pwm.duty_u16(self.duty)
-                    self.pwm.freq(tones[self.playingNotes[0]])
+                i = 0
+                for pwm in self.pwms:
+                    if (i >= len(self.playingNotes)):
+                        pwm.duty_u16(0)
+                    else:
+                        #Play note
+                        pwm.duty_u16(self.duty)
+                        pwm.freq(tones[self.playingNotes[i]])
+                    i = i + 1
             
 
             #Play arp of all playing notes
-            if (len(self.playingNotes) > 1):
-                self.pwm.duty_u16(self.duty)
-                if (self.arpnote >= len(self.playingNotes)):
+            if (len(self.playingNotes) > len(self.pwms)):
+                self.pwms[len(self.pwms)-1].duty_u16(self.duty)
+                if (self.arpnote > len(self.playingNotes)-len(self.pwms)):
                     self.arpnote = 0
-                self.pwm.freq(tones[self.playingNotes[self.arpnote]])
+                self.pwms[len(self.pwms)-1].freq(tones[self.playingNotes[self.arpnote+(len(self.pwms)-1)]])
                 self.arpnote = self.arpnote + 1
                 
             return True
