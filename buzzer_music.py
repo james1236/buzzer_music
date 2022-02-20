@@ -152,11 +152,9 @@ class music:
         
         if (not (pin is None)):
             pins = [pin]
-            
-        i = 0
+        self.pins = pins
         for pin in pins:
-            self.pwms.append(PWM(pins[i]))
-            i = i + 1
+            self.pwms.append(PWM(pin))
         
         self.notes = []
 
@@ -194,7 +192,23 @@ class music:
         for pwm in self.pwms:
             pwm.deinit()
         self.stopped = True
-        
+
+    def restart(self):
+        self.beat = -1
+        self.timer = 0
+        self.stop()
+        self.pwms = []
+        for pin in self.pins:
+            self.pwms.append(PWM(pin))
+        self.stopped = False
+
+    def resume(self):
+        self.stop()
+        self.pwms = []
+        for pin in self.pins:
+            self.pwms.append(PWM(pin))
+        self.stopped = False
+
     def tick(self):
         if (not self.stopped):
             self.timer = self.timer + 1
@@ -262,3 +276,4 @@ class music:
             return True
         else:
             return False
+
