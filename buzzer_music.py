@@ -196,8 +196,7 @@ class music:
     def start(self):
         self.beat = -1
         self.timer = 0
-        for pwm in self.pwms:
-            pwm.deinit()
+        self.stop()
         self.pwms = []
         for pin in self.pins:
             self.pwms.append(PWM(pin))
@@ -207,6 +206,7 @@ class music:
         if (self.timer % (self.tempo * self.end) == 0 and (not (self.timer == 0))):
             self.beat = -1
             self.timer = 0
+        self.stop()
         self.pwms = []
         for pin in self.pins:
             self.pwms.append(PWM(pin))
