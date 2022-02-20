@@ -193,7 +193,7 @@ class music:
             pwm.deinit()
         self.stopped = True
 
-    def start(self):
+    def restart(self):
         self.beat = -1
         self.timer = 0
         self.stop()
@@ -202,10 +202,7 @@ class music:
             self.pwms.append(PWM(pin))
         self.stopped = False
 
-    def continue_music(self):
-        if (self.timer % (self.tempo * self.end) == 0 and (not (self.timer == 0))):
-            self.beat = -1
-            self.timer = 0
+    def resume(self):
         self.stop()
         self.pwms = []
         for pin in self.pins:
