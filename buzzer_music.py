@@ -196,6 +196,8 @@ class music:
     def start(self):
         self.beat = -1
         self.timer = 0
+        for pwm in self.pwms:
+            pwm.deinit()
         self.pwms = []
         for pin in self.pins:
             self.pwms.append(PWM(pin))
