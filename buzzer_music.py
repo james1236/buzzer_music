@@ -257,17 +257,28 @@ class music:
                 i = 0
                 for pwm in self.pwms:
                     if (i >= len(self.playingNotes)):
-                        pwm.duty_u16(0)
+                        if hasattr(pwm, 'duty_u16'):
+                            pwm.duty_u16(0)
+                        else:
+                            pwm.duty(0)
                     else:
                         #Play note
-                        pwm.duty_u16(self.duty)
+                        if hasattr(pwm, 'duty_u16'):
+                            pwm.duty_u16(self.duty)
+                        else:
+                            pwm.duty(self.duty)
                         pwm.freq(tones[self.playingNotes[i]])
                     i = i + 1
             
 
             #Play arp of all playing notes
             if (len(self.playingNotes) > len(self.pwms)):
-                self.pwms[len(self.pwms)-1].duty_u16(self.duty)
+                p = self.pwms[len(self.pwms)-1];
+                if hasattr(p, 'duty_u16'):
+                    p.duty_u16(self.duty)
+                else:
+                    p.duty(self.duty)
+                
                 if (self.arpnote > len(self.playingNotes)-len(self.pwms)):
                     self.arpnote = 0
                 self.pwms[len(self.pwms)-1].freq(tones[self.playingNotes[self.arpnote+(len(self.pwms)-1)]])
