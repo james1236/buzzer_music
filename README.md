@@ -1,9 +1,11 @@
 # buzzer_music
 Play thousands of songs on your Raspberry Pi Pico with a buzzer
 
-Micropython library to play music through a buzzer, automatically replaces chords with fast arpeggios to simulate polyphony. Music can be easily taken from onlinesequencer.net
+Micropython library to play music through a buzzer, automatically replaces chords with fast arpeggios to simulate polyphony. Music can be easily taken from [onlinesequencer.net](https://onlinesequencer.net/)
 
 Also supports playing music through multiple buzzers, dividing the currently playing notes across them for polyphony
+
+<video src="https://user-images.githubusercontent.com/32351696/215248051-8b161d79-5e79-405d-bb80-717d03b9edb8.mp4](https://user-images.githubusercontent.com/32351696/215248120-8da75442-0793-4c2a-8c1f-44bfb2d84262.mp4)"></video>
 
 <br>
 
