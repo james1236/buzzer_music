@@ -5,6 +5,10 @@ Micropython library to play music through a buzzer, automatically replaces chord
 
 Also supports playing music through multiple buzzers, dividing the currently playing notes across them for polyphony
 
+### Online Simulator
+See it working or test it out using this online simulator! [One Buzzer](https://wokwi.com/projects/384484222930823169) | [Multiple Buzzers](https://wokwi.com/projects/384484055755294721) <br><br>
+![buzzers](https://github.com/james1236/buzzer_music/assets/32351696/87245a5d-99e1-4d9d-a607-87499c3d1e27)
+
 <video src="https://user-images.githubusercontent.com/32351696/215248051-8b161d79-5e79-405d-bb80-717d03b9edb8.mp4](https://user-images.githubusercontent.com/32351696/215248120-8da75442-0793-4c2a-8c1f-44bfb2d84262.mp4)"></video>
 
 <br>
