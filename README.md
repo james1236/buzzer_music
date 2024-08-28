@@ -16,9 +16,11 @@ See it working or test it out using this online simulator! [One Buzzer](https://
 ### Usage with RPi Pico / Other Micropython Board 
 1) Connect your buzzer to a ground pin and pin 0 on your Pico
 2) Install micropython on your Pico and copy the files in this repository to it
-3) Find some music on onlinesequencer.net, click edit, select all notes with CTRL + A and then copy them with CTRL + C
+3) Find some music on onlinesequencer.net (music aligned to the grid works best), click edit, select all notes with CTRL + A and then copy them with CTRL + C
 4) Paste the string in place of the one in the example file, making sure to remove the "Online Sequencer:120233:" from the start and the ";:" from the end
 <br>
+
+You can pause and resume with `mySong.stop()` and `mySong.resume()`
 
 ### Board Compatibility
 | Board | Compatible? |
