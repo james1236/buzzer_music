@@ -28,6 +28,7 @@ You can pause and resume with `mySong.stop()` and `mySong.resume()`
 | Raspberry Pi Pico | Yes |
 | Wemos D1 mini (ESP8266) | Yes [i8](/../../issues/8)|
 | Raspberry Pi 3, 4 | Follow steps below |
+| ESP32 | Yes [i14](/../../issues/14#issuecomment-2439775389)|
 <br>
 
 ### Raspberry Pi 3, 4 Compatibility
